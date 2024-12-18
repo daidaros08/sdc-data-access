@@ -1,28 +1,79 @@
 plugins {
 	id 'java'
-	id 'org.springframework.boot' version '3.3.5'
+	id 'org.springframework.boot' version '2.7.12'
 	id 'io.spring.dependency-management' version '1.1.6'
+	id 'maven-publish' // Agregamos este plugin para la publicación
 }
-
+ext {
+	springBootVersion = '2.0.1.RELEASE'
+}
 group = 'com.sdc'
 version = '0.0.1-SNAPSHOT'
 
 java {
 	toolchain {
-		languageVersion = JavaLanguageVersion.of(17)
+		languageVersion = JavaLanguageVersion.of(8)
 	}
 }
 
 repositories {
 	mavenCentral()
 }
-
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter'
+	// Spring Boot starters
+	implementation "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
+	implementation "org.springframework.boot:spring-boot-starter-jersey:${springBootVersion}"
+	implementation "org.springframework.boot:spring-boot-starter-validation:${springBootVersion}"
+	implementation "org.springframework.boot:spring-boot-starter-data-mongodb:${springBootVersion}"
+
+	// MongoDB Driver
+	implementation 'org.mongodb:mongo-java-driver:3.6.3'
+
+	// Springfox para documentación (Swagger)
+	implementation 'io.springfox:springfox-boot-starter:3.0.0'
+
+	// Jersey
+	implementation 'org.glassfish.jersey.containers:jersey-container-servlet-core:2.35'
+	implementation 'org.glassfish.jersey.inject:jersey-hk2:2.35'
+
+	// Utilidades adicionales
+	implementation 'com.google.guava:guava:31.1-jre'
+	implementation 'org.apache.commons:commons-collections4:4.4'
+	implementation 'org.mapstruct:mapstruct:1.6.3'
+	implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.0'
+
+	// Lombok
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+
+	// Dependencias de pruebas
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+	testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+	testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+	testImplementation 'org.mockito:mockito-core:3.9.0'
+	testImplementation 'de.flapdoodle.embed:de.flapdoodle.embed.mongo:2.2.0'
+	implementation 'org.mongodb:mongo-java-driver:3.12.10'
 }
+
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+publishing {
+	publications {
+		mavenJava(MavenPublication) {
+			from components.java // Publicar el jar generado por Java
+		}
+	}
+	repositories {
+		maven {
+			name = "GitHubPackages"
+			url = uri("https://maven.pkg.github.com/daidaros08/sdc-data-access")
+			credentials {
+				username = project.findProperty("gpr.user")
+				password = project.findProperty("gpr.token")
+			}
+		}
+	}
 }
