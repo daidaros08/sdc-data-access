@@ -71,8 +71,8 @@ publishing {
 			name = "GitHubPackages"
 			url = uri("https://maven.pkg.github.com/daidaros08/sdc-data-access")
 			credentials {
-				username = project.findProperty("gpr.user")
-				password = project.findProperty("gpr.token")
+				username = System.getenv("GPR_USER")
+				password = System.getenv("GPR_TOKEN")
 			}
 		}
 	}
