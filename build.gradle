@@ -9,7 +9,6 @@ ext {
 }
 group = 'com.sdc'
 version = '0.0.2-SNAPSHOT'
-
 java {
 	toolchain {
 		languageVersion = JavaLanguageVersion.of(8)
