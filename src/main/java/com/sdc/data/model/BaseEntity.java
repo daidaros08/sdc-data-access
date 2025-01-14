@@ -6,27 +6,27 @@ import java.util.Date;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Field;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import static com.sdc.data.utils.BaseConstants.DEFAULT_DATE_FORMAT;
 
-public abstract class BaseEntity implements Serializable {
+public class BaseEntity implements Serializable {
     @Id
-    @ApiModelProperty(readOnly = true)
+    @Schema(readOnly = true)
     @Field("id")
     private String id;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DEFAULT_DATE_FORMAT)
     @Field("creationDate")
-    @ApiModelProperty(readOnly = true)
+    @Schema(readOnly = true)
     private Date creationDate;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DEFAULT_DATE_FORMAT)
     @Field("lastModifiedDate")
-    @ApiModelProperty(readOnly = true)
+    @Schema(readOnly = true)
     private Date lastModifiedDate;
 
     @Field("active")
-    @ApiModelProperty(required = true)
+    @Schema(required = true)
     protected Boolean active = true;
 
     public BaseEntity() {

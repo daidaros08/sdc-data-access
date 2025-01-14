@@ -19,6 +19,7 @@ import com.sdc.data.exception.EntityAlreadyExistException;
 import com.sdc.data.exception.EntityNotFoundException;
 import com.sdc.data.model.BaseEntity;
 import com.sdc.data.repository.BaseRepository;
+import com.sdc.data.service.pagination.PaginatedResult;
 
 @Service
 public class BaseService <T extends BaseEntity, R extends BaseRepository<T, String>> {
@@ -38,6 +39,10 @@ public class BaseService <T extends BaseEntity, R extends BaseRepository<T, Stri
     public BaseService(Class<T> type, R repository) {
         this.repository = repository;
         this.type = type;
+    }
+
+    public PaginatedResult getPaginated(Page<T> page) {
+        return new PaginatedResult(page);
     }
 
     public Page<T> getAll(Pageable pageable) {
