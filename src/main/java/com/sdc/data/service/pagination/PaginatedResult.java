@@ -61,7 +61,4 @@ public class PaginatedResult<T extends BaseEntity> implements Serializable {
     public void setPageSize(int pageSize) {
         this.pageSize = pageSize;
     }
-
-
-
 }

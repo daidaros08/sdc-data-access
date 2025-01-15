@@ -15,8 +15,6 @@ import com.google.common.collect.Maps;
  * This class allow to retrieve params to filter the paginated search
  *
  */
-
-
 public class FilterableResource extends BaseResource {
 
     @Context

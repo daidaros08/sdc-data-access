@@ -6,9 +6,6 @@ import javax.validation.ValidatorFactory;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import com.sdc.data.model.BaseEntity;
-import com.sdc.data.repository.BaseRepository;
-import com.sdc.data.service.BaseService;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
 

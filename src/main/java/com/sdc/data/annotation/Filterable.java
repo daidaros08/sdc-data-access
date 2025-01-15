@@ -7,8 +7,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Esta anotacion permite filtrar elementos por sus atributos,
- * el nombre del campo debe ser igual al pasado por parámetro enviado en la URL
+ * This annotation allows filtering elements by their attributes.
+ * The field name must match the parameter sent in the URL.
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)

@@ -9,7 +9,6 @@ public abstract class BaseException extends RuntimeException {
     private Class<?> entityClass;
 
     public BaseException() {
-
     }
 
     public BaseException(String message, String errorCode, HttpStatus status, Class<?> entityClass) {
@@ -42,5 +41,4 @@ public abstract class BaseException extends RuntimeException {
     public void setEntityClass(Class<?> entityClass) {
         this.entityClass = entityClass;
     }
-
 }
