@@ -4,6 +4,9 @@ package com.sdc.data.service;
 import java.util.Arrays;
 import java.util.Optional;
 
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -11,15 +14,16 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
-import com.sdc.data.exception.EntityAlreadyExistException;
-import com.sdc.data.exception.EntityNotFoundException;
+import com.sdc.data.exception.type.EntityAlreadyExistException;
+import com.sdc.data.exception.type.EntityNotFoundException;
 import com.sdc.data.model.SampleEntity;
 import com.sdc.data.repository.SampleRepository;
 import static com.sdc.data.model.Builder.ID;
 import static com.sdc.data.model.Builder.buildEntity;
 import static com.sdc.data.model.Builder.buildEntityUpdate;
 import static com.sdc.data.model.Builder.buildPage;
+import static javax.ws.rs.core.Response.Status.CONFLICT;
+import static javax.ws.rs.core.Response.Status.NOT_FOUND;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -53,7 +57,7 @@ public class BaseServiceTest {
         Page<SampleEntity> result = baseService.getAll(PageRequest.of(0, 10));
 
         assertNotNull(result);
-        verify(repository).findByActiveTrue(any(Pageable.class));
+        verify(repository).findAll(any(Pageable.class));
         assertEquals(result.getTotalElements(), 1);
     }
 
@@ -76,7 +80,7 @@ public class BaseServiceTest {
         EntityNotFoundException exception = assertThrows(EntityNotFoundException.class, () -> {
             baseService.getById(ID);
         });
-        assertEquals("Not Found", exception.getErrorCode());
+        assertEquals(String.valueOf(NOT_FOUND.getStatusCode()), exception.getErrorCode());
     }
 
     @Test
@@ -86,7 +90,7 @@ public class BaseServiceTest {
         EntityAlreadyExistException exception = assertThrows(EntityAlreadyExistException.class, () -> {
             baseService.create(buildEntity());
         });
-        assertEquals(HttpStatus.CONFLICT.getReasonPhrase(), exception.getErrorCode());
+        assertEquals(String.valueOf(CONFLICT.getStatusCode()), exception.getErrorCode());
     }
 
     @Test
@@ -108,7 +112,7 @@ public class BaseServiceTest {
         EntityNotFoundException exception = assertThrows(EntityNotFoundException.class, () -> {
             baseService.update(ID, buildEntityUpdate());
         });
-        assertEquals("Not Found", exception.getErrorCode());
+        assertEquals(String.valueOf(NOT_FOUND.getStatusCode()), exception.getErrorCode());
     }
 
     @Test
@@ -127,11 +131,11 @@ public class BaseServiceTest {
         EntityNotFoundException exception = assertThrows(EntityNotFoundException.class, () -> {
             baseService.deleteAdmin(ID);
         });
-        assertEquals("Not Found", exception.getErrorCode());
+        assertEquals(String.valueOf(NOT_FOUND.getStatusCode()), exception.getErrorCode());
     }
 
     private void mockGetAllEntitiesResponse() {
-        when(repository.findByActiveTrue(any(Pageable.class)))
+        when(repository.findAll(any(Pageable.class)))
             .thenReturn(buildPage(Arrays.asList(buildEntity())));
     }
 

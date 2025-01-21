@@ -33,7 +33,7 @@ public class EntityTest {
         SampleEntity entity = buildEntity();
 
         assertEquals(entity.getId(), ID);
-        assertEquals(entity.getCreationDate(), DATE);
+        assertEquals(entity.getCreatedDate(), DATE);
         assertEquals(entity.getActive(), Boolean.TRUE);
         assertEquals(entity.getName(), NAME);
         assertEquals(entity.getDescription(), DESCRIPTION);

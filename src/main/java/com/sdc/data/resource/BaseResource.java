@@ -14,7 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public abstract class BaseResource {
-
+    protected static final String OFFSET = "offset";
+    protected static final String LIMIT = "limit";
+    protected static final String SORT = "sort";
+    protected static final String ORDER = "order";
+    protected static final String ID = "id";
     private final static Logger LOG = LoggerFactory.getLogger(BaseResource.class);
 
     @Autowired

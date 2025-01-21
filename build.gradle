@@ -5,10 +5,10 @@ plugins {
 	id 'maven-publish' // Agregamos este plugin para la publicación
 }
 ext {
-		springBootVersion = '2.0.1.RELEASE'
+		springBootVersion = '2.7.12'
 }
 group = 'com.sdc'
-version = '0.0.3-SNAPSHOT'
+version = '1.0.0'
 java {
 	toolchain {
 		languageVersion = JavaLanguageVersion.of(8)
@@ -24,9 +24,6 @@ dependencies {
 	implementation "org.springframework.boot:spring-boot-starter-jersey:${springBootVersion}"
 	implementation "org.springframework.boot:spring-boot-starter-validation:${springBootVersion}"
 	implementation "org.springframework.boot:spring-boot-starter-data-mongodb:${springBootVersion}"
-
-	// MongoDB Driver
-	implementation 'org.mongodb:mongo-java-driver:3.6.3'
 
 	// Swagger
 	implementation 'io.swagger.core.v3:swagger-annotations:2.2.11'
@@ -56,7 +53,6 @@ dependencies {
 	testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
 	testImplementation 'org.mockito:mockito-core:3.9.0'
 	testImplementation 'de.flapdoodle.embed:de.flapdoodle.embed.mongo:2.2.0'
-	implementation 'org.mongodb:mongo-java-driver:3.12.10'
 }
 
 

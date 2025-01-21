@@ -1,17 +1,17 @@
-package com.sdc.data.exception;
+package com.sdc.data.exception.type;
 
-import org.springframework.http.HttpStatus;
+import javax.ws.rs.core.Response.Status;
 
 public abstract class BaseException extends RuntimeException {
 
     private String errorCode;
-    private HttpStatus status;
+    private Status status;
     private Class<?> entityClass;
 
     public BaseException() {
     }
 
-    public BaseException(String message, String errorCode, HttpStatus status, Class<?> entityClass) {
+    public BaseException(String message, String errorCode, Status status, Class<?> entityClass) {
         super(message);
         this.errorCode = errorCode;
         this.status = status;
@@ -26,11 +26,11 @@ public abstract class BaseException extends RuntimeException {
         this.errorCode = errorCode;
     }
 
-    public HttpStatus getStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    public void setStatus(HttpStatus status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 

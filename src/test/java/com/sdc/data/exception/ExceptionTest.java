@@ -1,8 +1,12 @@
 package com.sdc.data.exception;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.springframework.http.HttpStatus;
+import javax.ws.rs.core.Response.Status;
+
+import com.sdc.data.exception.type.BadRequestException;
+import com.sdc.data.exception.type.ConstraintViolationException;
+import com.sdc.data.exception.type.EntityAlreadyExistException;
+import com.sdc.data.exception.type.EntityNotFoundException;
 import com.sdc.data.model.SampleEntity;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -12,14 +16,13 @@ public class ExceptionTest {
     private static final String NOT_FOUND = "Not Found";
     private static final String CONFLICT = "Entity already exists";
     private static final String INVALID_PARAMETER = "Invalid Parameter";
-    private static String ERROR_CODE = "400_BAD_REQUEST";
     private static final Class<?> ENTITY = SampleEntity.class;
 
     @Test
     public void shouldBuildBadRequestException() {
-        BadRequestException badRequestException = new BadRequestException(BAD_REQUEST, ERROR_CODE, ENTITY);
+        BadRequestException badRequestException = new BadRequestException(BAD_REQUEST, ENTITY);
 
-        assertEquals(badRequestException.getErrorCode(), ERROR_CODE);
+        assertEquals(badRequestException.getErrorCode(), String.valueOf(Status.BAD_REQUEST.getStatusCode()));
         assertEquals(badRequestException.getEntityClass(), ENTITY);
         assertEquals(badRequestException.getMessage(), BAD_REQUEST);
     }
@@ -29,17 +32,17 @@ public class ExceptionTest {
         EntityNotFoundException exception = new EntityNotFoundException(NOT_FOUND);
 
         assertEquals(exception.getMessage(), NOT_FOUND);
-        assertEquals(exception.getErrorCode(), HttpStatus.NOT_FOUND.getReasonPhrase());
+        assertEquals(exception.getErrorCode(), String.valueOf(Status.NOT_FOUND.getStatusCode()));
         assertEquals(exception.getEntityClass(), null);
-        assertEquals(exception.getStatus(), HttpStatus.NOT_FOUND);
+        assertEquals(exception.getStatus(), Status.NOT_FOUND);
     }
 
     @Test
     public void shouldBuildNotFoundException() {
-        EntityNotFoundException exception = new EntityNotFoundException(NOT_FOUND, ERROR_CODE, ENTITY);
+        EntityNotFoundException exception = new EntityNotFoundException(NOT_FOUND, ENTITY);
 
         assertEquals(exception.getMessage(), NOT_FOUND);
-        assertEquals(exception.getErrorCode(), ERROR_CODE);
+        assertEquals(exception.getErrorCode(), String.valueOf(Status.NOT_FOUND.getStatusCode()));
         assertEquals(exception.getEntityClass(), ENTITY);
     }
 
@@ -48,14 +51,14 @@ public class ExceptionTest {
         EntityAlreadyExistException exception = new EntityAlreadyExistException(CONFLICT, ENTITY);
 
         assertEquals(exception.getMessage(), CONFLICT);
-        assertEquals(exception.getErrorCode(), HttpStatus.CONFLICT.getReasonPhrase());
+        assertEquals(exception.getErrorCode(), String.valueOf(Status.CONFLICT.getStatusCode()));
         assertEquals(exception.getEntityClass(), ENTITY);
-        assertEquals(exception.getStatus(), HttpStatus.CONFLICT);
+        assertEquals(exception.getStatus(), Status.CONFLICT);
     }
 
     @Test
     public void shouldBuildConstraintViolationException() {
-        ConstraintViolatonException vioation = new ConstraintViolatonException(INVALID_PARAMETER);
+        ConstraintViolationException vioation = new ConstraintViolationException(INVALID_PARAMETER);
 
         assertEquals(vioation.getMessage(), INVALID_PARAMETER);
         assertEquals(vioation.getErrorCode(), "Validation error");
